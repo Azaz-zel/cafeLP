@@ -1,0 +1,10 @@
+node_modules/
+dist/
+data/
+coverage/
+.env
+*.log
+graphify-out/
+.playwright-mcp/
+.claude/
+.serena/

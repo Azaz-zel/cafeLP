@@ -1,0 +1,20 @@
+{
+  "name": "cafe-landing",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "build": "npm run build -w apps/web && npm run build -w apps/api",
+    "start": "npm start -w apps/api",
+    "dev:api": "npm run dev -w apps/api",
+    "dev:web": "npm run dev -w apps/web",
+    "test": "npm test -w apps/web && npm test -w apps/api",
+    "check:cafes": "npm run check:cafes -w apps/api",
+    "typecheck": "npm run typecheck -w apps/web && npm run typecheck -w apps/api"
+  }
+}

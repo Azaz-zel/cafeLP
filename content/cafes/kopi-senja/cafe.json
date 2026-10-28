@@ -1,0 +1,91 @@
+{
+  "name": "Kopi Senja",
+  "tagline": "Kopi susu gula aren dan roti bakar, dari pagi sampai senja.",
+  "specialty": "Kopi gula aren",
+  "since": 2019,
+  "area": "Coblong",
+  "city": "Bandung",
+  "mode": "light",
+  "pitch": true,
+  "contact": {
+    "whatsapp": "6281234567890",
+    "instagram": "kopisenja.demo",
+    "gofood": "https://gofood.co.id/",
+    "grabfood": "https://food.grab.com/id/id/"
+  },
+  "address": "Jl. Cempaka No. 12, Coblong, Bandung",
+  "mapsUrl": "https://maps.google.com/?q=Coblong%2C%20Bandung",
+  "hours": {
+    "senin": { "open": "10:00", "close": "22:00" },
+    "selasa": { "open": "10:00", "close": "22:00" },
+    "rabu": { "open": "10:00", "close": "22:00" },
+    "kamis": { "open": "10:00", "close": "22:00" },
+    "jumat": { "open": "10:00", "close": "23:00" },
+    "sabtu": { "open": "08:00", "close": "01:00" },
+    "minggu": { "open": "08:00", "close": "22:00" }
+  },
+  "photos": {
+    "hero": "hero.webp",
+    "atmosphere": "suasana.webp",
+    "gallery": ["galeri-1.webp", "galeri-2.webp", "galeri-3.webp"],
+    "location": "lokasi.webp"
+  },
+  "atmosphere": {
+    "title": "Tempat untuk pelan-pelan",
+    "text": "Meja kayu, cahaya sore dari jendela besar, dan kopi yang diseduh tanpa buru-buru."
+  },
+  "facilities": [
+    { "icon": "coffee", "title": "Dine-in", "note": "dan take away" },
+    { "icon": "wifi", "title": "Wi-Fi", "note": "dan colokan di tiap meja" },
+    { "icon": "delivery", "title": "Antar", "note": "GoFood dan GrabFood" }
+  ],
+  "bestSellers": [
+    { "name": "Kopi Susu Senja", "price": 22000, "photo": "kopi-susu.webp" },
+    { "name": "Roti Bakar Cokelat Pisang", "price": 25000, "photo": "roti-bakar.webp" },
+    { "name": "Matcha Latte", "price": 28000, "photo": "matcha.webp" },
+    { "name": "Mie Goreng Telur", "price": 30000, "photo": "mie-goreng.webp" }
+  ],
+  "menu": [
+    {
+      "category": "Coffee",
+      "photo": "kategori-coffee.webp",
+      "items": [
+        { "name": "Kopi Susu Senja", "price": 22000, "note": "Espresso, susu segar, gula aren" },
+        { "name": "Espresso", "price": 18000 },
+        { "name": "Americano", "price": 20000, "note": "Panas atau dingin" },
+        { "name": "Cappuccino", "price": 26000 },
+        { "name": "Caffè Latte", "price": 26000 },
+        { "name": "V60 Single Origin", "price": 30000, "note": "Tanya biji yang tersedia hari ini" }
+      ]
+    },
+    {
+      "category": "Non-Coffee",
+      "photo": "kategori-non-coffee.webp",
+      "items": [
+        { "name": "Matcha Latte", "price": 28000 },
+        { "name": "Cokelat", "price": 25000, "note": "Panas atau dingin" },
+        { "name": "Teh Tarik", "price": 18000 },
+        { "name": "Lemon Tea", "price": 16000 }
+      ]
+    },
+    {
+      "category": "Makanan",
+      "photo": "kategori-makanan.webp",
+      "items": [
+        { "name": "Mie Goreng Telur", "price": 30000, "note": "Telur ceplok, daun bawang" },
+        { "name": "Nasi Goreng Kampung", "price": 32000, "note": "Telur ceplok, kerupuk" },
+        { "name": "Chicken Katsu Rice", "price": 35000, "note": "Saus kari" }
+      ]
+    },
+    {
+      "category": "Snack",
+      "photo": "kategori-snack.webp",
+      "items": [
+        { "name": "Roti Bakar Cokelat Pisang", "price": 25000 },
+        { "name": "Kentang Goreng", "price": 20000 },
+        { "name": "Pisang Goreng Madu", "price": 18000 },
+        { "name": "Cireng Rujak", "price": 18000 }
+      ]
+    }
+  ]
+}
