@@ -21,11 +21,19 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
   if (pitchWa && !/^62\d{8,13}$/.test(pitchWa)) {
     throw new Error('PITCH_WHATSAPP harus format 62xxxxxxxxxx');
   }
+  const publicUrl = env.PUBLIC_URL?.trim() ? new URL(env.PUBLIC_URL.trim()).origin : null;
+  if (env.NODE_ENV === 'production') {
+    // Without it, share-preview URLs come from the client-controlled Host header.
+    if (!publicUrl?.startsWith('https://')) throw new Error('PUBLIC_URL wajib diisi (https://domainmu) di production');
+    if (!env.ADMIN_PASSWORD || env.ADMIN_PASSWORD.length < 12) {
+      throw new Error('ADMIN_PASSWORD wajib diisi, minimal 12 karakter, di production');
+    }
+  }
   return {
     contentDir: resolve(env.CONTENT_DIR ?? resolve(root, 'content')),
     webDist: resolve(env.WEB_DIST ?? resolve(root, 'apps/web/dist')),
     dataDir: resolve(env.DATA_DIR ?? resolve(root, 'data')),
-    publicUrl: env.PUBLIC_URL?.replace(/\/+$/, '') || null,
+    publicUrl,
     adminPassword: env.ADMIN_PASSWORD || null,
     pitch: pitchName && pitchWa ? { name: pitchName, whatsapp: pitchWa } : null,
   };

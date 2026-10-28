@@ -147,7 +147,7 @@ export function CafePage({ data }: { data: PageData }) {
           </div>
         </section>
 
-        <nav className="band" aria-label="Kategori menu">
+        <nav className="band" aria-label="Lompat ke kategori menu">
           <ul className="band-list wrap">
             {cafe.menu.map((m, i) => (
               <li key={m.category}>
@@ -167,7 +167,6 @@ export function CafePage({ data }: { data: PageData }) {
 
         <section id="suasana" className="atmosphere" aria-labelledby="suasana-title">
           <div className="atmosphere-text">
-            <p className="eyebrow">Suasana</p>
             <h2 id="suasana-title" className="display">
               {cafe.atmosphere.title}
             </h2>
@@ -238,7 +237,6 @@ export function CafePage({ data }: { data: PageData }) {
 
         <section id="lokasi" className="location wrap" aria-labelledby="lokasi-title">
           <div className="location-text">
-            <p className="eyebrow">Lokasi &amp; jam buka</p>
             <h2 id="lokasi-title" className="display">
               Mampir ke {cafe.area}
             </h2>
