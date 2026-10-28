@@ -58,7 +58,7 @@ Butuh Docker dan domain yang dikelola di Cloudflare.
    ```bash
    git clone <repo> cafe-landing && cd cafe-landing
    cp .env.example .env        # isi semua nilainya
-   mkdir -p data && sudo chown 1000:1000 data
+   mkdir -p data && sudo chown 1000:1000 data   # user "node" di container
    docker compose up -d --build
    ```
 3. Update: `git pull && docker compose up -d --build`
