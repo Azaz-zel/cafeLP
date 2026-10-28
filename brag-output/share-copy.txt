@@ -1,0 +1,1 @@
+Bikin template landing page cafe: satu cafe.json jadi website personal untuk tiap cafe, link-nya dikirim lewat DM, dan aku tahu kapan pemiliknya membukanya. React + NestJS, jalan di server rumah.

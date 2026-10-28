@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: 'Bodoni Moda';
+        src: url('assets/fonts/bodoni-moda-latin-wght-normal.woff2') format('woff2');
+        font-weight: 400 900;
+      }
+      @font-face {
+        font-family: 'Hanken Grotesk';
+        src: url('assets/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 900;
+      }
+      /* OS fonts for the code card and the admin view (the real admin uses system-ui). */
+      @font-face {
+        font-family: 'Consolas';
+        src: local('Consolas');
+      }
+      @font-face {
+        font-family: 'Segoe UI';
+        src: local('Segoe UI');
+      }
+      /* The site's own tokens (apps/web/src/styles.css). */
+      :root {
+        --bg: #efeae2;
+        --surface: #e2dace;
+        --ink: #171513;
+        --muted: #665e54;
+        --line: #d5cdc1;
+        --band-ink: #efeae2;
+        --band-muted: #a9a196;
+        --open: #3e8e5e;
+        --serif: 'Bodoni Moda', Georgia, serif;
+        --sans: 'Hanken Grotesk', system-ui, sans-serif;
+        --mono: 'Consolas', monospace;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        font-family: var(--sans);
+        color: var(--ink);
+        background: var(--bg);
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+      }
+      .label {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        line-height: 1.4;
+      }
+      .headline {
+        position: absolute;
+        left: 120px;
+        top: 96px;
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 76px;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      /* Scene 1: hero */
+      #s1 .wordmark {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 150px;
+        text-align: center;
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 300px;
+        line-height: 0.9;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+      #s1 .photo {
+        position: absolute;
+        left: 735px;
+        top: 330px;
+        width: 450px;
+        height: 600px;
+        overflow: hidden;
+        background: var(--surface);
+      }
+      #s1 .photo img,
+      .cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      #s1 .note {
+        position: absolute;
+        bottom: 150px;
+      }
+
+      /* Scene 2: one file */
+      #s2 .code {
+        position: absolute;
+        left: 120px;
+        top: 300px;
+        width: 760px;
+        background: var(--ink);
+        color: var(--band-ink);
+        font-family: var(--mono);
+        font-size: 36px;
+        line-height: 1.6;
+      }
+      #s2 .code-bar {
+        padding: 18px 32px;
+        border-bottom: 1px solid #34302b;
+        font-size: 28px;
+        color: var(--band-muted);
+      }
+      #s2 .code-body {
+        padding: 28px 32px 36px;
+        white-space: pre;
+      }
+      .k {
+        color: #a9c7b4;
+      }
+      .s {
+        color: #e8c39e;
+      }
+      .typed {
+        display: inline-block;
+        vertical-align: bottom;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 0;
+      }
+      #s2 .stage {
+        position: absolute;
+        left: 980px;
+        top: 300px;
+        width: 820px;
+        height: 520px;
+        background: var(--surface);
+        overflow: hidden;
+      }
+      #s2 .mark {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 150px;
+        line-height: 0.88;
+        text-transform: uppercase;
+      }
+
+      /* Scene 3: the DM */
+      #s3 .chat {
+        position: absolute;
+        left: 120px;
+        top: 300px;
+        width: 760px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        padding: 16px;
+      }
+      #s3 .preview {
+        background: #f6f3ee;
+      }
+      #s3 .preview-img {
+        height: 330px;
+        overflow: hidden;
+      }
+      #s3 .preview-text {
+        padding: 20px 24px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      #s3 .preview-title {
+        font-size: 32px;
+        font-weight: 700;
+      }
+      #s3 .preview-desc {
+        font-size: 28px;
+        color: var(--muted);
+      }
+      #s3 .preview-domain {
+        font-size: 28px;
+        color: var(--muted);
+      }
+      #s3 .msg {
+        padding: 20px 8px 4px;
+        font-size: 28px;
+        line-height: 1.4;
+      }
+      #s3 .phone {
+        position: absolute;
+        left: 1180px;
+        top: 90px;
+        width: 435px;
+        height: 900px;
+        background: var(--ink);
+        border-radius: 56px;
+        padding: 18px;
+      }
+      #s3 .screen {
+        width: 399px;
+        height: 864px;
+        border-radius: 40px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      #s3 .screen img {
+        width: 399px;
+        display: block;
+      }
+
+      /* Scene 4: the signal (admin view, system UI as in admin.view.ts) */
+      #s4 .admin {
+        position: absolute;
+        left: 120px;
+        right: 120px;
+        top: 300px;
+        font-family: 'Segoe UI', sans-serif;
+        color: #1c1a17;
+      }
+      #s4 .admin-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 24px;
+      }
+      #s4 .admin-title {
+        font-size: 44px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      #s4 .admin-sub {
+        position: relative;
+        height: 36px;
+        width: 560px;
+        font-size: 30px;
+        color: #5f5a53;
+      }
+      #s4 .admin-sub span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        white-space: nowrap;
+      }
+      #s4 .table {
+        background: #ffffff;
+        border: 1px solid #e3dfd9;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      #s4 .row {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 0.5fr 1.2fr;
+        align-items: center;
+        padding: 26px 36px;
+        font-size: 30px;
+        border-bottom: 1px solid #efece8;
+      }
+      #s4 .row:last-child {
+        border-bottom: 0;
+      }
+      #s4 .row.th {
+        font-size: 28px;
+        font-weight: 600;
+        color: #5f5a53;
+        padding-block: 18px;
+      }
+      #s4 .flash {
+        position: absolute;
+        inset: 0;
+        background: #eef5f0;
+        opacity: 0;
+      }
+      #s4 .cell {
+        position: relative;
+      }
+      #s4 .name {
+        font-weight: 600;
+      }
+      #s4 .slug {
+        font-size: 28px;
+        color: #5f5a53;
+      }
+      #s4 .muted {
+        color: #5f5a53;
+      }
+      #s4 .swap {
+        position: relative;
+        height: 40px;
+      }
+      #s4 .swap > span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #b8b2a9;
+        display: inline-block;
+      }
+      .dot.on {
+        background: #2e8b57;
+      }
+
+      /* Scene 5: outro */
+      #s5 {
+        background: var(--ink);
+        color: var(--band-ink);
+      }
+      #s5 .line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 340px;
+        text-align: center;
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 120px;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+      #s5 .stack {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 680px;
+        text-align: center;
+        color: var(--band-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="21" data-width="1920" data-height="1080">
+      <!-- Scene 1: the page -->
+      <section id="s1" class="clip" data-start="0" data-duration="3.9" data-track-index="0">
+        <h1 class="wordmark">KOPI SENJA</h1>
+        <div class="photo"><img src="assets/img/hero.webp" alt="" /></div>
+        <p class="note label" style="left: 120px">Kopi gula aren<br />Sejak 2019</p>
+        <p class="note label" style="right: 120px; text-align: right">Coblong<br />Bandung</p>
+      </section>
+
+      <!-- Scene 2: one file -->
+      <section id="s2" class="clip" data-start="3.6" data-duration="4.5" data-track-index="0">
+        <h2 class="headline">Satu file JSON.<br />Satu website cafe.</h2>
+        <div class="code">
+          <div class="code-bar">cafe.json</div>
+          <div class="code-body">{
+  <span class="k">"name"</span>: <span class="s">"<span class="typed" id="t1">Kopi Senja</span><span class="typed" id="t2">Rumah Teduh</span>"</span>,
+  <span class="k">"area"</span>: <span class="s">"Coblong"</span>,
+  <span class="k">"mode"</span>: <span class="s">"light"</span>,
+  <span class="k">"pitch"</span>: <span class="s">true</span>
+}</div>
+        </div>
+        <div class="stage" data-layout-allow-overlap>
+          <div class="mark" id="m1">Kopi<br />Senja</div>
+          <div class="mark" id="m2">Rumah<br />Teduh</div>
+        </div>
+      </section>
+
+      <!-- Scene 3: the DM -->
+      <section id="s3" class="clip" data-start="7.8" data-duration="5.0" data-track-index="0">
+        <h2 class="headline">Dikirim<br />lewat DM.</h2>
+        <div class="chat">
+          <div class="preview">
+            <div class="preview-img"><img class="cover" src="assets/img/hero.webp" alt="" /></div>
+            <div class="preview-text">
+              <span class="preview-title">Kopi Senja · Coblong, Bandung</span>
+              <span class="preview-desc">Kopi susu gula aren dan roti bakar, dari pagi sampai senja.</span>
+              <span class="preview-domain">namamu.my.id</span>
+            </div>
+          </div>
+          <p class="msg">Halo kak, ini contoh website untuk Kopi Senja.</p>
+        </div>
+        <div class="phone">
+          <div class="screen"><img id="page" src="assets/img/page-mobile.webp" alt="" /></div>
+        </div>
+      </section>
+
+      <!-- Scene 4: the signal -->
+      <section id="s4" class="clip" data-start="12.5" data-duration="4.6" data-track-index="0">
+        <h2 class="headline">Kamu tahu saat<br />link dibuka.</h2>
+        <div class="admin">
+          <div class="admin-head">
+            <span class="admin-title">Demo cafe</span>
+            <span class="admin-sub" data-layout-allow-overlap>
+              <span id="sub1">3 demo · 1 sudah dibuka</span>
+              <span id="sub2">3 demo · 2 sudah dibuka</span>
+            </span>
+          </div>
+          <div class="table">
+            <div class="row th"><span>Cafe</span><span>Status</span><span>Dibuka</span><span>Terakhir dibuka</span></div>
+            <div class="row">
+              <div class="flash" id="flash"></div>
+              <span class="cell"><span class="name">Kopi Senja</span><br /><span class="slug">/kopi-senja</span></span>
+              <span class="cell swap" data-layout-allow-overlap>
+                <span id="st1"><i class="dot"></i>Belum dibuka</span>
+                <span id="st2"><i class="dot on"></i>Dibuka</span>
+              </span>
+              <span class="cell swap" data-layout-allow-overlap>
+                <span id="c1">0×</span>
+                <span id="c2">1×</span>
+              </span>
+              <span class="cell swap muted" data-layout-allow-overlap>
+                <span id="l1">Belum ada</span>
+                <span id="l2">Baru saja · HP</span>
+              </span>
+            </div>
+            <div class="row">
+              <span class="cell"><span class="name">Tanah Kopi</span><br /><span class="slug">/tanah-kopi</span></span>
+              <span class="cell"><span style="display: inline-flex; align-items: center; gap: 14px"><i class="dot on"></i>Dibuka</span></span>
+              <span class="cell">2×</span>
+              <span class="cell muted">Kemarin · HP</span>
+            </div>
+            <div class="row">
+              <span class="cell"><span class="name">Rumah Teduh</span><br /><span class="slug">/rumah-teduh</span></span>
+              <span class="cell"><span style="display: inline-flex; align-items: center; gap: 14px"><i class="dot"></i>Belum dibuka</span></span>
+              <span class="cell">0×</span>
+              <span class="cell muted">Belum ada</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 5: outro -->
+      <section id="s5" class="clip" data-start="16.8" data-duration="4.2" data-track-index="0">
+        <p class="line">Satu file.<br />Satu cafe. Satu link.</p>
+        <p class="stack label">Cafe Landing · React · NestJS · SQLite</p>
+      </section>
+
+      <!-- Audio -->
+      <audio id="a1" data-start="0" data-duration="21" data-track-index="1" data-volume="0.5" data-fade-in="0.6" data-fade-out="1.5" src="assets/music/happy-beats-business-moves-vol-9-by-ende-dot-app.mp3"></audio>
+      <audio id="a2" data-start="1.07" data-duration="0.4" data-track-index="2" data-volume="0.6" src="assets/sfx/impactSoft_medium_001.ogg"></audio>
+      <audio id="a3" data-start="4.55" data-duration="0.3" data-track-index="2" data-volume="0.25" src="assets/sfx/keypress-003.wav"></audio>
+      <audio id="a4" data-start="4.85" data-duration="0.3" data-track-index="2" data-volume="0.25" src="assets/sfx/keypress-007.wav"></audio>
+      <audio id="a5" data-start="5.15" data-duration="0.3" data-track-index="2" data-volume="0.25" src="assets/sfx/keypress-003.wav"></audio>
+      <audio id="a6" data-start="6.34" data-duration="0.4" data-track-index="2" data-volume="0.5" src="assets/sfx/switch_002.ogg"></audio>
+      <audio id="a7" data-start="6.6" data-duration="0.3" data-track-index="3" data-volume="0.25" src="assets/sfx/keypress-007.wav"></audio>
+      <audio id="a8" data-start="8.44" data-duration="0.3" data-track-index="2" data-volume="0.5" src="assets/sfx/click_003.ogg"></audio>
+      <audio id="a9" data-start="14.22" data-duration="0.5" data-track-index="2" data-volume="0.55" src="assets/sfx/bong_001.ogg"></audio>
+      <audio id="a10" data-start="17.38" data-duration="0.4" data-track-index="2" data-volume="0.55" src="assets/sfx/impactSoft_medium_004.ogg"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const out = 'power3.out';
+
+      // Scene 1: the page. Wordmark settles, photo rises into it like the live hero.
+      tl.fromTo('#s1 .wordmark', { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: 0.8, ease: out }, 0.1);
+      tl.fromTo('#s1 .photo', { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.55, ease: out }, 0.55); // lands ~1.07 beat
+      tl.fromTo('#s1 .photo img', { scale: 1.08 }, { scale: 1, duration: 3, ease: 'power2.out' }, 0.55);
+      tl.fromTo('#s1 .note', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: out, stagger: 0.1 }, 1.3);
+      tl.to('#s1', { opacity: 0, x: -60, duration: 0.3, ease: 'power2.in' }, 3.6);
+
+      // Scene 2: one file.
+      tl.fromTo('#s2', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.4, ease: out }, 3.6);
+      tl.fromTo('#s2 .code', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: out }, 3.85);
+      tl.fromTo('#s2 .stage', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: out }, 3.95);
+      tl.fromTo('#t1', { width: '0ch' }, { width: '10ch', duration: 0.8, ease: 'steps(10)' }, 4.5);
+      tl.set('#t2', { width: '0ch' }, 0);
+      tl.fromTo('#m1', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: out }, 4.6);
+      tl.set('#m2', { opacity: 0 }, 0);
+      tl.to('#t1', { width: '0ch', duration: 0.4, ease: 'steps(10)' }, 5.9);
+      // beat-locked: 6.34 (strong cue) - the name swap
+      tl.fromTo('#t2', { width: '0ch' }, { width: '11ch', duration: 0.6, ease: 'steps(11)' }, 6.34);
+      tl.to('#m1', { opacity: 0, y: -60, duration: 0.2, ease: 'power2.in' }, 6.34);
+      // starts after m1 is gone so the two serif names never stack
+      tl.fromTo('#m2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.45, ease: out }, 6.56);
+      tl.to('#s2', { opacity: 0, x: -60, duration: 0.3, ease: 'power2.in' }, 7.8);
+
+      // Scene 3: the DM. Bubble lands on the 8.44 beat, then the real page scrolls.
+      tl.fromTo('#s3', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 7.8);
+      tl.fromTo('#s3 .headline', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: out }, 7.9);
+      tl.fromTo('#s3 .chat', { opacity: 0, y: 50, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: out }, 8.0);
+      tl.fromTo('#s3 .phone', { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.6, ease: out }, 8.6);
+      tl.fromTo('#page', { y: 0 }, { y: -1900, duration: 3.1, ease: 'power1.inOut' }, 9.4);
+      tl.to('#s3', { opacity: 0, duration: 0.3 }, 12.5);
+
+      // Scene 4: the signal.
+      tl.fromTo('#s4', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 12.5);
+      tl.fromTo('#s4 .headline', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: out }, 12.6);
+      tl.fromTo('#s4 .admin', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: out }, 12.75);
+      tl.set(['#st2', '#c2', '#l2', '#sub2'], { opacity: 0 }, 0);
+      // beat-locked: 14.22 (strong cue) - the row flips to Dibuka
+      tl.to(['#st1', '#c1', '#l1', '#sub1'], { opacity: 0, y: -14, duration: 0.25, ease: 'power2.in' }, 14.22);
+      tl.fromTo(['#st2', '#c2', '#l2', '#sub2'], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: out }, 14.3);
+      tl.fromTo('#flash', { opacity: 0 }, { opacity: 1, duration: 0.25 }, 14.22);
+      tl.to('#flash', { opacity: 0, duration: 1.2, ease: 'power2.out' }, 14.9);
+      tl.to('#s4', { opacity: 0, y: -40, duration: 0.3, ease: 'power2.in' }, 16.8);
+
+      // Scene 5: outro on the dark band.
+      tl.fromTo('#s5', { opacity: 0 }, { opacity: 1, duration: 0.35 }, 16.8);
+      tl.fromTo('#s5 .line', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: out }, 17.1);
+      tl.fromTo('#s5 .stack', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: out }, 18.2);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['main'] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
