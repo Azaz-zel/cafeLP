@@ -13,7 +13,7 @@ async function readPageData(): Promise<PageData> {
   if (import.meta.env.DEV) {
     const { default: cafe } = await import('../../../content/cafes/kopi-senja/cafe.json');
     document.title = 'Kopi Senja (dev)';
-    return { slug: 'kopi-senja', cafe: cafe as Cafe, pitch: { name: '[Nama Kamu]', whatsapp: '6280000000000' } };
+    return { slug: 'kopi-senja', cafe: cafe as Cafe, pitch: { name: '[Nama Kamu]', whatsapp: '6285121022185' } };
   }
   throw new Error('page-data tidak ada; halaman ini harus disajikan oleh server');
 }
