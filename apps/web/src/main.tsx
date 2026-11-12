@@ -1,14 +1,19 @@
 import '@fontsource-variable/bodoni-moda';
+import '@fontsource-variable/cormorant-garamond';
 import '@fontsource-variable/hanken-grotesk';
+import '@fontsource-variable/jost';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import type { Cafe, PageData } from '../../api/src/cafes/cafe.schema';
+import type { Cafe, HomeData, PageData } from '../../api/src/cafes/cafe.schema';
 import { CafePage } from './CafePage';
+import { HomePage } from './HomePage';
+import { MalamPage } from './MalamPage';
+import { PagiPage } from './PagiPage';
 import './styles.css';
 
-async function readPageData(): Promise<PageData> {
+async function readPageData(): Promise<PageData | HomeData> {
   const el = document.getElementById('page-data');
-  if (el?.textContent) return JSON.parse(el.textContent) as PageData;
+  if (el?.textContent) return JSON.parse(el.textContent) as PageData | HomeData;
   // Vite dev has no server injection; render the sample cafe so the template can be worked on.
   if (import.meta.env.DEV) {
     const { default: cafe } = await import('../../../content/cafes/kopi-senja/cafe.json');
@@ -36,9 +41,10 @@ function recordVisit(slug: string) {
 }
 
 const data = await readPageData();
+// Falls back to CafePage: the Vite dev sample is raw JSON, so the schema's default layout is not applied to it.
+const Page = ('cafe' in data && { klasik: CafePage, malam: MalamPage, pagi: PagiPage }[data.cafe.layout]) || CafePage;
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <CafePage data={data} />
-  </StrictMode>,
+  <StrictMode>{'cafes' in data ? <HomePage data={data} /> : <Page data={data as PageData} />}</StrictMode>,
 );
-if (!import.meta.env.DEV) recordVisit(data.slug);
+// Only demo pages are tracked; the home page is not a prospect opening their link.
+if (!import.meta.env.DEV && 'slug' in data) recordVisit(data.slug);

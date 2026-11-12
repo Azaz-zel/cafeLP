@@ -1,0 +1,639 @@
+/*
+ * Layout "pagi". Direction: the owner's "Wedding Awards" reference, its burgundy swapped for the
+ * cafe's accent. White panels with gaps on warm beige, square corners, a thin oversized serif
+ * cropped by the panel edge, pale ghost words behind headings, numbered hairline lists.
+ * The root redefines the base tokens, so shared pieces (pitch strip, order bar, focus ring) follow.
+ */
+[data-layout='pagi'] body {
+  background: #cfc3b4;
+}
+
+.pagi {
+  --bg: #cfc3b4;
+  --panel: #fff;
+  --surface: #ddd2c2;
+  --ink: #1e1f1c;
+  --muted: #5f625b;
+  --faint: #86847a;
+  --ghost: #f1ede6;
+  --line: #ddd6ca;
+  --strip: #45473f;
+  --accent: #4a7337;
+  --on-accent: #fff;
+  --open: var(--accent);
+  --gap: 8px;
+  --p: 24px;
+  --thin: 'Cormorant Garamond Variable', var(--serif);
+  /* Dark wash under white type that sits on a photo. */
+  --scrim: linear-gradient(to top, rgba(34, 44, 24, 0.6), rgba(34, 44, 24, 0) 60%);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: var(--gap);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+  color-scheme: light;
+  overflow-x: clip;
+}
+
+.pagi a {
+  text-decoration: none;
+}
+
+.pagi > .pitch {
+  margin: calc(-1 * var(--gap)) calc(-1 * var(--gap)) 0;
+}
+
+.pg-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* The one button shape: a flat bar in the accent colour. */
+.pg-bar {
+  min-height: 52px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 14px;
+  font-weight: 600;
+  touch-action: manipulation;
+  transition: transform 160ms var(--ease-out), filter 200ms ease;
+}
+
+.pg-bar:active {
+  transform: scale(0.98);
+}
+
+/* Secondary bar: outlined, for the member card link. */
+.pg-bar-line {
+  background: none;
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+/* Hero buttons: side by side on phones, stacked where the side panel is too narrow for both. */
+.pg-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pg-cta .pg-bar {
+  flex: 1 1 auto;
+}
+
+.pg-h2 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.pg-lead {
+  max-width: 46ch;
+  margin-top: 12px;
+  color: var(--muted);
+}
+
+/* Hero: white side panel, photo, and the cafe name cropped by the bottom edge. */
+.pg-hero {
+  --big: min(540px, calc((100vw - 2 * var(--gap) - 16px) / (var(--last-len) * 0.47)));
+  --name-left: 8px;
+  position: relative;
+  /* One full screen, minus the beige frame around it. */
+  min-height: calc(100svh - 2 * var(--gap));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+}
+
+.pg-side {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 20px 16px;
+  padding: var(--p);
+  background: var(--panel);
+}
+
+.pg-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  color: var(--accent);
+  font-family: var(--thin);
+  font-weight: 400;
+}
+
+.pg-logo-a {
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pg-logo-b {
+  padding-left: 1.3em;
+  font-size: 24px;
+  line-height: 0.8;
+  text-transform: lowercase;
+}
+
+.pg-nav {
+  display: flex;
+  gap: 18px;
+}
+
+.pg-nav a {
+  padding: 12px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pg-side-foot {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pg-note {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.pg-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pg-hero-photo {
+  position: relative;
+  flex: 1;
+  min-height: 420px;
+  background: var(--surface);
+}
+
+.pg-hero-photo img,
+.pg-split-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pg-hero-photo::after,
+.pg-split-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+}
+
+.pg-name {
+  font-family: var(--thin);
+  font-weight: 300;
+  color: #fff;
+  text-transform: lowercase;
+  pointer-events: none;
+}
+
+.pg-name span {
+  position: absolute;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* bottom offset puts the baseline just under the panel edge, so the edge crops the letters. */
+.pg-name-last {
+  left: var(--name-left);
+  bottom: -0.14em;
+  font-size: var(--big);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+}
+
+.pg-name-lead {
+  /* Over the first letters, resting on their x-height. */
+  left: calc(var(--name-left) + var(--big) * 0.05);
+  bottom: calc(var(--big) * 0.36);
+  font-size: calc(var(--big) * 0.21);
+  line-height: 1;
+  text-shadow: 0 2px 28px rgba(34, 44, 24, 0.6);
+}
+
+/* Panels */
+.pg-panel {
+  position: relative;
+  overflow: hidden;
+  padding: var(--p);
+  background: var(--panel);
+}
+
+.pg-panel > * {
+  position: relative;
+}
+
+.pg-panel > .pg-ghost {
+  position: absolute;
+  right: 3%;
+  top: -0.06em;
+  font-family: var(--thin);
+  font-weight: 300;
+  font-size: clamp(96px, 16vw, 230px);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--ghost);
+  pointer-events: none;
+}
+
+.pg-products {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 8px;
+}
+
+.pg-idx {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.pg-products img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.pg-products h3 {
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.pg-products .price {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* Split panels: a photo carrying an oversized numeral, beside text. */
+.pg-split {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+}
+
+.pg-split-photo {
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+  background: var(--surface);
+}
+
+.pg-numeral {
+  position: absolute;
+  z-index: 1;
+  left: -0.03em;
+  bottom: -0.2em;
+  font-family: var(--thin);
+  font-weight: 300;
+  font-size: clamp(120px, 19.5vw, 280px);
+  font-variant-numeric: lining-nums;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.pg-split-rev .pg-numeral {
+  left: auto;
+  right: -0.02em;
+}
+
+/* Text keeps a right margin; the button bar alone runs to the panel edge, as in the reference. */
+.pg-split-text {
+  display: flex;
+  flex-direction: column;
+  padding: var(--p) 0 var(--p) var(--p);
+}
+
+.pg-split-text > * {
+  margin-right: var(--p);
+}
+
+.pg-steps {
+  margin-top: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pg-steps li,
+.pg-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding-block: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.pg-step-num {
+  flex: 0 0 34px;
+  font-family: var(--thin);
+  font-weight: 300;
+  font-size: 28px;
+  font-variant-numeric: lining-nums;
+  line-height: 1;
+  color: var(--faint);
+}
+
+.pg-step-text {
+  flex: 1;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.pg-step-text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pg-split-text > .pg-stamped {
+  position: relative;
+  margin: 44px 0 0 46px;
+}
+
+.pg-stamp,
+.pg-stamp-leaf {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  color: var(--accent);
+}
+
+.pg-stamp {
+  left: -46px;
+  translate: 0 -50%;
+  letter-spacing: 0.1em;
+}
+
+.pg-stamp-disc {
+  fill: var(--panel);
+}
+
+.pg-stamp-leaf {
+  left: 0;
+  translate: -50% -50%;
+}
+
+.pg-stamped .pg-bar {
+  justify-content: flex-start;
+  padding-left: 68px;
+}
+
+.pg-split-text > .pg-bar-wide {
+  justify-content: space-between;
+  margin: 32px 0 0;
+}
+
+.pg-hours {
+  width: calc(100% - var(--p));
+  margin-top: 20px;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.pg-hours th,
+.pg-hours td {
+  padding: 11px 0;
+  border-top: 1px solid var(--line);
+  font-weight: 500;
+  text-align: left;
+}
+
+.pg-hours td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.pg-hours tr:last-child th,
+.pg-hours tr:last-child td {
+  border-bottom: 1px solid var(--line);
+}
+
+.pg-hours .is-today th,
+.pg-hours .is-today td {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.pg-gallery {
+  display: grid;
+  gap: var(--gap);
+}
+
+.pg-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.pg-tabs {
+  display: flex;
+  gap: 24px;
+  margin: 12px calc(-1 * var(--p)) 12px;
+  padding-inline: var(--p);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pg-tab {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.pg-tab[aria-selected='true'] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.pg-list {
+  border-bottom: 1px solid var(--line);
+}
+
+.pg-list .price {
+  font-weight: 600;
+}
+
+.pg-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 16px 20px;
+}
+
+.pg-footer-mark {
+  font-family: var(--thin);
+  font-weight: 300;
+  font-size: clamp(44px, 6vw, 80px);
+  line-height: 1;
+}
+
+/* Darker than --muted: this text sits on the beige ground, not on a white panel. */
+.pg-credit {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #45473f;
+}
+
+.pg-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 28px;
+}
+
+.pg-footer-links a {
+  display: inline-block;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pagi .order-bar {
+  margin: 0 calc(-1 * var(--gap)) calc(-1 * var(--gap));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pg-bar:hover {
+    filter: brightness(1.12);
+  }
+  .pg-nav a:hover,
+  .pg-footer-links a:hover,
+  .pg-tab:hover {
+    color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pg-hero-photo img {
+    animation: settle 900ms var(--ease-out) both;
+  }
+}
+
+@media (min-width: 900px) {
+  .pagi {
+    --gap: 16px;
+    --p: 56px;
+  }
+
+  .pg-h2 {
+    font-size: 26px;
+  }
+
+  .pg-hero {
+    --big: min(540px, calc((100vw - 2 * var(--gap) - 332px) / (var(--last-len) * 0.47)));
+    --name-left: 308px;
+    flex-direction: row;
+  }
+
+  .pg-side {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 40px;
+    padding: 44px;
+  }
+
+  .pg-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .pg-side-foot {
+    margin-top: auto;
+    gap: 20px;
+  }
+
+  .pg-products {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 56px;
+  }
+
+  .pg-split {
+    flex-direction: row;
+  }
+
+  .pg-split-photo,
+  .pg-split-text {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .pg-split-photo {
+    min-height: clamp(480px, 42vw, 600px);
+  }
+
+  .pg-tabs {
+    margin-inline: 0;
+    padding-inline: 0;
+    gap: 28px;
+  }
+
+  .pg-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 56px;
+  }
+
+  .pg-footer {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+    padding: 56px 40px 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-bar,
+  .pg-tab {
+    transition: none;
+  }
+}

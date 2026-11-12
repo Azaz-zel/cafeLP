@@ -131,7 +131,9 @@ section[id] {
 .text-link,
 .fact strong,
 .hero-note,
-.footer-links a {
+.footer-links a,
+.home-label,
+.home-meta {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -307,11 +309,28 @@ section[id] {
   height: 44px;
   display: grid;
   place-items: center;
+  /* Keeps the icon centred when .desktop-only turns this into a flex box. */
+  justify-content: center;
   margin-right: -10px;
 }
 
 .desktop-only {
   display: none;
+}
+
+/* Narrow phones: tighter, so the nav and the Member button still share one row. */
+@media (max-width: 359px) {
+  .topbar-nav {
+    margin-left: -7px;
+  }
+
+  .topbar-nav a {
+    padding-inline: 7px;
+  }
+
+  .topbar-actions .btn-compact {
+    padding-inline: 12px;
+  }
 }
 
 /* Hero: the wordmark is the focal point; the photo overlaps its lower edge. */
@@ -931,13 +950,182 @@ section[id] {
   }
 }
 
+/* Showcase home (`/`): the list prospects pick a demo from, in the template's own editorial world. */
+.home-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+}
+
+.home-intro {
+  padding-block: 48px 40px;
+}
+
+.home-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(52px, 10.5vw, 152px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+
+.home-list-wrap {
+  padding-bottom: 64px;
+}
+
+.home-list {
+  border-bottom: 1px solid var(--line);
+}
+
+.home-row {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding-block: 20px;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.home-num,
+.home-go {
+  display: none;
+}
+
+.home-photo {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.home-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms var(--ease-out);
+}
+
+.home-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.home-name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(30px, 4.4vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.home-meta {
+  color: var(--muted);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.home-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding-block: 40px;
+  border-block: 1px solid var(--line);
+}
+
+.home-empty-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.home-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  padding-block: 64px;
+}
+
+.home-cta-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(40px, 5.6vw, 80px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  max-width: 14ch;
+}
+
+.home-cta-btn {
+  background: var(--band-ink);
+  color: var(--band);
+}
+
+.home-cta-btn:focus-visible {
+  outline-color: var(--band-ink);
+}
+
+.home-foot {
+  padding-block: 24px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-row:hover .home-photo img {
+    transform: scale(1.03);
+  }
+  .home-row:hover .home-go {
+    transform: translateX(4px);
+  }
+}
+
+@media (min-width: 900px) {
+  .home-intro {
+    padding-block: 72px 56px;
+  }
+  .home-list-wrap {
+    padding-bottom: 96px;
+  }
+  .home-row {
+    grid-template-columns: 56px 168px minmax(0, 1fr) 40px;
+    gap: 32px;
+    padding-block: 28px;
+  }
+  .home-num,
+  .home-go {
+    display: block;
+  }
+  .home-num {
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+  .home-go {
+    transition: transform 200ms var(--ease-out);
+  }
+  .home-cta {
+    padding-block: 96px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .btn,
   .tab,
-  .order-bar {
+  .order-bar,
+  .home-photo img,
+  .home-go {
     transition: none;
   }
 }

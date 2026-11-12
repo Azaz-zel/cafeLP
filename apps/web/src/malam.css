@@ -1,0 +1,746 @@
+/*
+ * Layout "malam". Direction: the owner's "Tura" reference. Graphite monochrome, one geometric
+ * sans in tracked capitals, a centred wordmark, raised panels with deep shadows.
+ * The root redefines the base tokens, so shared pieces (pitch strip, order bar, focus ring) follow.
+ */
+[data-layout='malam'] body {
+  background: #17181b;
+}
+
+.malam {
+  --bg: #17181b;
+  --bg-alt: #1b1c1f;
+  --surface: #232428;
+  --ink: #ececec;
+  --soft: #c9cace;
+  --muted: #a3a5ab;
+  --line: rgba(255, 255, 255, 0.14);
+  --strip: #2a2b2f;
+  --accent: var(--ink);
+  --on-accent: #17181b;
+  --open: var(--accent);
+  --pad: 20px;
+  --shadow: 0 36px 64px rgba(0, 0, 0, 0.5);
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Jost Variable', var(--sans);
+  color-scheme: dark;
+  overflow-x: clip;
+}
+
+.malam a {
+  text-decoration: none;
+}
+
+.ml-label,
+.ml-nav a,
+.ml-btn,
+.ml-tab,
+.ml-status,
+.ml-scroll,
+.ml-facts,
+.ml-footer-links a {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.ml-label {
+  color: var(--muted);
+}
+
+.ml-label-strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ml-heading {
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Buttons: raised dark slabs; the order button is the one light surface on the page. */
+.ml-btn {
+  min-height: 52px;
+  padding: 0 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #26272b;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  touch-action: manipulation;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, filter 200ms ease;
+}
+
+.ml-btn:active {
+  transform: scale(0.97);
+}
+
+.ml-btn-solid {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.ml-btn-inset {
+  background: var(--bg-alt);
+}
+
+/* Hero: the wordmark alone in a lit field, as in the reference. The photo is only texture. */
+.ml-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: max(640px, 100svh);
+  display: flex;
+  flex-direction: column;
+  padding: 16px var(--pad) 24px;
+  background: #1f2023;
+  overflow: hidden;
+}
+
+.ml-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+}
+
+.ml-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at 50% 46%, rgba(31, 32, 35, 0.2) 0%, #1f2023 74%);
+}
+
+.ml-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ml-logo {
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.ml-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.ml-nav a {
+  padding: 14px 0;
+  font-size: 12px;
+}
+
+/* Member link: an outlined nav item from 600px up, a hero button (.ml-actions-member) below that. */
+.ml-nav .ml-nav-member {
+  display: none;
+  align-self: center;
+  /* Less on the right: the tracking leaves a gap after the last letter. */
+  padding: 12px calc(18px - 0.24em) 12px 18px;
+  border: 1px solid var(--muted);
+  touch-action: manipulation;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
+}
+
+.ml-nav .ml-nav-member:active {
+  transform: scale(0.97);
+}
+
+.ml-hero-mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding-block: 32px;
+}
+
+.ml-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ml-lockup > .ml-label:first-child {
+  padding-left: 0.4em;
+}
+
+/* Scales to the word so any cafe name fills the width without wrapping. */
+.ml-wordmark {
+  font-size: min(248px, calc((100vw - 2 * var(--pad)) / (var(--word-len) * 0.7)));
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  margin-right: -0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+.ml-lockup-end {
+  align-self: flex-end;
+  margin-top: 6px;
+  padding-right: 0.6em;
+  line-height: 1.8;
+}
+
+.ml-actions {
+  width: 100%;
+  max-width: 360px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ml-actions .ml-btn {
+  padding-inline: 12px;
+}
+
+/* Full width, except "Lihat menu" when the Member button shares its row. */
+.ml-actions .ml-btn-solid,
+.ml-actions .ml-btn:nth-child(2):last-child {
+  grid-column: 1 / -1;
+}
+
+.ml-hero-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ml-social {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 -10px -13px;
+}
+
+.ml-social a {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--soft);
+}
+
+.ml-status {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 10px;
+  color: var(--soft);
+  text-align: right;
+}
+
+.ml-status .dot {
+  flex-shrink: 0;
+}
+
+/* Phones: the status stays on one line; the area is already in the footer. */
+.ml-status-area,
+.ml-scroll {
+  display: none;
+}
+
+/* Sections: numbered, centred, generous. */
+.ml-section {
+  position: relative;
+  padding: 88px var(--pad) 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ml-section-alt {
+  background: var(--bg-alt);
+}
+
+.ml-num {
+  position: absolute;
+  left: var(--pad);
+  top: 32px;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--muted);
+}
+
+/* Three overlapping prints; the title sits across their lower edge. */
+.ml-trio {
+  width: 100%;
+  max-width: 1040px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ml-trio img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.ml-trio-main {
+  position: relative;
+  z-index: 1;
+  width: 52%;
+}
+
+.ml-trio-main:only-child {
+  width: min(100%, 420px);
+}
+
+.ml-trio-side {
+  width: 34%;
+  filter: brightness(0.8);
+}
+
+.ml-trio-side:first-child {
+  margin-right: -10%;
+}
+
+.ml-trio-side:last-child {
+  margin-left: -10%;
+}
+
+.ml-title {
+  position: relative;
+  z-index: 2;
+  max-width: 1040px;
+  margin-top: -0.62em;
+  font-size: clamp(30px, 5.4vw, 76px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  text-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.ml-lead {
+  max-width: 520px;
+  margin-top: 28px;
+  color: var(--soft);
+}
+
+.ml-facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 40px;
+  margin-top: 36px;
+  color: var(--muted);
+}
+
+.ml-facts strong {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ml-card {
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.ml-products {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  text-align: left;
+}
+
+.ml-products img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.ml-card-body {
+  padding: 14px 14px 18px;
+}
+
+.ml-card-body h3 {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.ml-card-body .price {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* Menu and location share the reference's "text beside a raised panel" pairing. */
+.ml-split {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.ml-split-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ml-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 24px;
+  margin-top: 16px;
+}
+
+.ml-tab {
+  min-height: 44px;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.ml-tab[aria-selected='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.ml-panel {
+  padding: 32px 24px 20px;
+  text-align: left;
+}
+
+.ml-panel-title {
+  margin-bottom: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.ml-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.ml-list li:last-child {
+  border-bottom: 0;
+}
+
+.ml-item-name {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ml-item-name small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+}
+
+.ml-list .price {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--soft);
+}
+
+.ml-loc-photo {
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin-block: 28px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.ml-split-side address {
+  max-width: 34ch;
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--soft);
+}
+
+.ml-hours {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: var(--soft);
+}
+
+.ml-hours th,
+.ml-hours td {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-weight: 400;
+}
+
+.ml-hours th {
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ml-hours td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ml-hours .is-today th,
+.ml-hours .is-today td {
+  color: #fff;
+  font-weight: 600;
+}
+
+.ml-panel .ml-btn {
+  width: 100%;
+  margin-block: 24px 12px;
+}
+
+.ml-footer {
+  padding: 72px var(--pad) 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ml-footer .ml-heading {
+  margin-top: 8px;
+}
+
+.ml-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 32px;
+  margin-top: 32px;
+}
+
+.ml-footer-links a {
+  display: inline-block;
+  padding: 14px 0;
+  font-size: 12px;
+}
+
+.ml-credit {
+  margin-top: 24px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.malam .order-bar .ml-btn {
+  width: 100%;
+  box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ml-btn:hover {
+    background: #303136;
+  }
+  .ml-btn-solid:hover {
+    background: var(--accent);
+    filter: brightness(0.88);
+  }
+  .ml-nav a:hover,
+  .ml-footer-links a:hover {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .ml-social a:hover,
+  .ml-tab:hover {
+    color: var(--ink);
+  }
+  .ml-nav .ml-nav-member:hover {
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .ml-actions {
+    width: auto;
+    max-width: none;
+    display: flex;
+    gap: 16px;
+  }
+
+  .ml-actions .ml-btn {
+    padding-inline: 32px;
+  }
+
+  .ml-actions .ml-actions-member {
+    display: none;
+  }
+
+  .ml-nav .ml-nav-member {
+    display: block;
+  }
+
+  .ml-trio-main {
+    width: 40%;
+  }
+
+  .ml-trio-side {
+    width: 26%;
+  }
+
+  .ml-trio-side:first-child {
+    margin-right: -4%;
+  }
+
+  .ml-trio-side:last-child {
+    margin-left: -4%;
+  }
+}
+
+@media (min-width: 900px) {
+  .malam {
+    --pad: 72px;
+  }
+
+  .ml-hero {
+    padding-block: 28px 36px;
+  }
+
+  .ml-nav {
+    gap: 36px;
+  }
+
+  .ml-scroll {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    writing-mode: vertical-rl;
+    color: var(--muted);
+  }
+
+  .ml-scroll::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: var(--muted);
+  }
+
+  .ml-status-area {
+    display: inline;
+  }
+
+  .ml-section {
+    padding-block: 128px;
+  }
+
+  .ml-num {
+    top: 40px;
+  }
+
+  .ml-products {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    margin-top: 56px;
+  }
+
+  .ml-card-body {
+    padding: 20px 20px 24px;
+  }
+
+  .ml-card-body h3 {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+  }
+
+  .ml-split {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 72px;
+  }
+
+  .ml-split-side {
+    flex: 1 1 0;
+    padding-top: 40px;
+  }
+
+  .ml-tabs {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 24px;
+  }
+
+  .ml-panel {
+    flex: 1.3 1 0;
+    min-width: 0;
+    padding: 40px 48px 28px;
+  }
+
+  .ml-panel .ml-btn {
+    display: flex;
+    width: fit-content;
+    margin-inline: auto;
+  }
+
+  .ml-footer {
+    padding-block: 112px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ml-btn,
+  .ml-tab {
+    transition: none;
+  }
+}

@@ -13,6 +13,7 @@ const price = z.number().int().positive().max(10_000_000);
 // https only: these end up in href attributes, so javascript: and data: URLs must never pass.
 const httpsUrl = z.url({ protocol: /^https$/ });
 
+export const LAYOUTS = ['klasik', 'malam', 'pagi'] as const;
 export const FACILITY_ICONS = ['coffee', 'wifi', 'plug', 'delivery', 'parking', 'music', 'plant', 'pet'] as const;
 
 export const cafeSchema = z.strictObject({
@@ -23,6 +24,8 @@ export const cafeSchema = z.strictObject({
   area: text(40),
   city: text(40),
   mode: z.enum(['light', 'dark']).default('light'),
+  // Page design. klasik: serif wordmark (follows `mode`). malam: dark monochrome. pagi: white panels on beige.
+  layout: z.enum(LAYOUTS).default('klasik'),
   accent: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'warna hex #RRGGBB').optional(),
   pitch: z.boolean().default(true),
   contact: z.strictObject({
@@ -34,6 +37,8 @@ export const cafeSchema = z.strictObject({
   }),
   address: text(160),
   mapsUrl: httpsUrl,
+  // The cafe's page on the member-card app. The page shows a "Member" button when this is set.
+  memberUrl: httpsUrl.optional(),
   hours: z.strictObject({
     senin: day,
     selasa: day,
@@ -75,6 +80,21 @@ export interface PageData {
   slug: string;
   cafe: Cafe;
   pitch: { name: string; whatsapp: string } | null;
+}
+
+/** One row on the showcase home page (`/`). Only cafes with `pitch: false` are listed. */
+export interface ShowcaseCafe {
+  slug: string;
+  name: string;
+  area: string;
+  city: string;
+  mode: Cafe['mode'];
+  hero: string;
+}
+
+export interface HomeData {
+  cafes: ShowcaseCafe[];
+  pitch: PageData['pitch'];
 }
 
 /** Every photo file a cafe.json points at. */

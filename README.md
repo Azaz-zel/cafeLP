@@ -14,7 +14,7 @@ Template landing page cafe untuk menawarkan jasa pembuatan website. Satu templat
 3. Jalankan `npm run check:cafes`. Perbaiki semua yang ditandai ✗.
 4. Di server: salin folder ke `content/cafes/`. Tidak perlu build ulang atau restart.
 
-`"pitch": true` menampilkan strip "Contoh website untuk ..." dan menyembunyikan halaman dari Google. Pakai `"pitch": false` hanya untuk demo publik di portofolio.
+`"pitch": true` menampilkan strip "Contoh website untuk ..." dan menyembunyikan halaman dari Google. Pakai `"pitch": false` hanya untuk demo publik di portofolio: cafe ini muncul di daftar contoh di halaman depan (`/`), urut nama folder. Demo prospek (`"pitch": true`) tidak pernah tampil di sana.
 
 Hanya pakai foto milik cafe untuk demo yang dikirim ke cafe itu sendiri, dan hapus foldernya kalau mereka tidak tertarik.
 
@@ -25,9 +25,11 @@ Hanya pakai foto milik cafe untuk demo yang dikirim ke cafe itu sendiri, dan hap
 |---|---|
 | `name`, `tagline`, `specialty`, `since`, `area`, `city` | Teks di hero. `name` jadi wordmark besar, jadi nama pendek paling bagus. |
 | `mode` | `light` atau `dark` |
+| `layout` | Opsional, desain halaman: `klasik` (default, ikut `mode`), `malam` (gelap monokrom), `pagi` (panel putih di atas krem). |
 | `accent` | Opsional, warna tombol `#RRGGBB`. Kosongkan untuk hitam. |
 | `contact.whatsapp` | Format `62xxxxxxxxxx`. Semua tombol pesan menuju nomor ini. |
 | `contact.instagram`, `gofood`, `grabfood` | Opsional. Link harus `https://`. |
+| `memberUrl` | Opsional, link kartu member cafe (`https://`). Kalau diisi, halaman menampilkan tombol Member. |
 | `hours.<hari>` | `{ "open": "10:00", "close": "22:00" }` atau `null` kalau tutup. Jam tutup lebih kecil dari jam buka berarti lewat tengah malam. |
 | `photos` | Nama file di `photos/`: `hero` (3:4), `atmosphere`, `gallery` (maks 3), `location` |
 | `facilities` | Maks 3. Ikon: `coffee`, `wifi`, `plug`, `delivery`, `parking`, `music`, `plant`, `pet` |

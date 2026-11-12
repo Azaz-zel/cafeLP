@@ -6,7 +6,7 @@
   "area": "Coblong",
   "city": "Bandung",
   "mode": "light",
-  "pitch": true,
+  "pitch": false,
   "contact": {
     "whatsapp": "6285121022185",
     "instagram": "kopisenja.demo",
@@ -15,6 +15,7 @@
   },
   "address": "Jl. Cempaka No. 12, Coblong, Bandung",
   "mapsUrl": "https://maps.google.com/?q=Coblong%2C%20Bandung",
+  "memberUrl": "https://memcard.rdvgroup.my.id/kopi-senja",
   "hours": {
     "senin": { "open": "10:00", "close": "22:00" },
     "selasa": { "open": "10:00", "close": "22:00" },

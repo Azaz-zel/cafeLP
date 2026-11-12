@@ -21,6 +21,7 @@ describe('renderCafePage', () => {
     area: 'Coblong',
     city: 'Bandung',
     mode: 'dark',
+    layout: 'malam',
     pitch: true,
     photos: { hero: 'hero.webp' },
   } as never;
@@ -37,10 +38,22 @@ describe('renderCafePage', () => {
     expect(html.match(/\$&amp;/g)?.length).toBeGreaterThan(0);
   });
 
-  it('marks prospect demos noindex and sets the theme mode', () => {
+  it('marks prospect demos noindex and sets the theme mode and layout', () => {
     expect(html).toContain('content="noindex, nofollow"');
-    expect(html).toContain('<html lang="id" data-mode="dark">');
+    expect(html).toContain('<html lang="id" data-mode="dark" data-layout="malam">');
+    expect(html).toContain('<meta name="theme-color" content="#17181B">');
     expect(html).toContain('content="https://demo.my.id/media/kopi/hero.webp"');
+  });
+
+  it('gives the tab an icon with the name initial in the layout colours', () => {
+    const icon = decodeURIComponent(html.match(/<link rel="icon" href="data:image\/svg\+xml,([^"]+)">/)![1]);
+    expect(icon).toContain("fill='#17181B'");
+    expect(icon).toContain('>K</text>');
+  });
+
+  it('never puts a non-alphanumeric first character into the icon', () => {
+    const evil = renderCafePage(template, { slug: 'x', cafe: { ...(cafe as object), name: '</svg><script>' } as never, pitch: null }, 'https://demo.my.id');
+    expect(decodeURIComponent(evil.match(/data:image\/svg\+xml,([^"]+)"/)![1])).toContain('>•</text>');
   });
 
   it('escapeHtml covers all five special characters', () => {

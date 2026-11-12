@@ -1,0 +1,93 @@
+{
+  "name": "Daun Pagi",
+  "tagline": "Matcha yang dikocok per gelas dan sarapan yang boleh sampai sore.",
+  "specialty": "Matcha latte",
+  "since": 2022,
+  "area": "Prawirotaman",
+  "city": "Yogyakarta",
+  "mode": "light",
+  "layout": "pagi",
+  "accent": "#4F7A3A",
+  "pitch": false,
+  "contact": {
+    "whatsapp": "6285121022185",
+    "instagram": "daunpagi.demo",
+    "gofood": "https://gofood.co.id/"
+  },
+  "address": "Jl. Prawirotaman II No. 8, Mergangsan, Yogyakarta",
+  "mapsUrl": "https://maps.google.com/?q=Prawirotaman%2C%20Yogyakarta",
+  "memberUrl": "https://memcard.rdvgroup.my.id/daun-pagi",
+  "hours": {
+    "senin": { "open": "07:00", "close": "17:00" },
+    "selasa": { "open": "07:00", "close": "17:00" },
+    "rabu": { "open": "07:00", "close": "17:00" },
+    "kamis": { "open": "07:00", "close": "17:00" },
+    "jumat": { "open": "07:00", "close": "17:00" },
+    "sabtu": { "open": "07:00", "close": "19:00" },
+    "minggu": { "open": "07:00", "close": "19:00" }
+  },
+  "photos": {
+    "hero": "hero.webp",
+    "atmosphere": "suasana.webp",
+    "gallery": ["galeri-1.webp", "galeri-2.webp", "galeri-3.webp"],
+    "location": "lokasi.webp"
+  },
+  "atmosphere": {
+    "title": "Terang sejak jam tujuh",
+    "text": "Ruang putih dengan banyak tanaman dan teras yang kena matahari pagi. Anjing dan kucing boleh ikut duduk."
+  },
+  "facilities": [
+    { "icon": "plant", "title": "Teras", "note": "teduh, banyak tanaman" },
+    { "icon": "wifi", "title": "Wi-Fi", "note": "kencang untuk kerja pagi" },
+    { "icon": "pet", "title": "Ramah hewan", "note": "di area teras" }
+  ],
+  "bestSellers": [
+    { "name": "Iced Matcha Latte", "price": 28000, "photo": "matcha-latte.webp" },
+    { "name": "Strawberry Matcha", "price": 32000, "photo": "strawberry-matcha.webp" },
+    { "name": "Avocado Toast", "price": 38000, "photo": "avocado-toast.webp" },
+    { "name": "Pancake Buah", "price": 35000, "photo": "pancake.webp" }
+  ],
+  "menu": [
+    {
+      "category": "Matcha",
+      "photo": "kategori-matcha.webp",
+      "items": [
+        { "name": "Matcha Latte", "price": 28000, "note": "Panas atau dingin" },
+        { "name": "Strawberry Matcha", "price": 32000, "note": "Selai stroberi buatan sendiri" },
+        { "name": "Matcha Kelapa", "price": 30000, "note": "Dengan air kelapa muda" },
+        { "name": "Usucha", "price": 30000, "note": "Matcha murni, tanpa susu" },
+        { "name": "Hojicha Latte", "price": 28000 }
+      ]
+    },
+    {
+      "category": "Kopi",
+      "photo": "kategori-kopi.webp",
+      "items": [
+        { "name": "Es Kopi Susu", "price": 22000, "note": "Gula aren" },
+        { "name": "Americano", "price": 20000, "note": "Panas atau dingin" },
+        { "name": "Caffè Latte", "price": 26000 },
+        { "name": "Dirty Matcha", "price": 32000, "note": "Matcha latte dengan satu shot espresso" }
+      ]
+    },
+    {
+      "category": "Brunch",
+      "photo": "kategori-brunch.webp",
+      "items": [
+        { "name": "Avocado Toast", "price": 38000, "note": "Roti sourdough, tomat, daun bawang" },
+        { "name": "Telur Orak-arik", "price": 34000, "note": "Dengan roti panggang dan salad" },
+        { "name": "Granola Bowl", "price": 32000, "note": "Yoghurt, buah potong, madu" },
+        { "name": "Nasi Ayam Sambal Matah", "price": 36000 }
+      ]
+    },
+    {
+      "category": "Manis",
+      "photo": "kategori-manis.webp",
+      "items": [
+        { "name": "Pancake Buah", "price": 35000, "note": "Stroberi, pisang, sirup mapel" },
+        { "name": "Matcha Cake", "price": 30000 },
+        { "name": "Pisang Bakar Keju", "price": 22000 },
+        { "name": "Es Krim Matcha", "price": 20000 }
+      ]
+    }
+  ]
+}

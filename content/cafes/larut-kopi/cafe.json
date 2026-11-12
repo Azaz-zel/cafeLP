@@ -1,0 +1,93 @@
+{
+  "name": "Larut Kopi",
+  "tagline": "Espresso dan seduh manual untuk yang baru mulai saat kota mulai sepi.",
+  "specialty": "Seduh manual",
+  "since": 2021,
+  "area": "Kebayoran Baru",
+  "city": "Jakarta Selatan",
+  "mode": "dark",
+  "layout": "malam",
+  "pitch": false,
+  "contact": {
+    "whatsapp": "6285121022185",
+    "instagram": "larutkopi.demo",
+    "gofood": "https://gofood.co.id/",
+    "grabfood": "https://food.grab.com/id/id/"
+  },
+  "address": "Jl. Wijaya II No. 27, Kebayoran Baru, Jakarta Selatan",
+  "mapsUrl": "https://maps.google.com/?q=Kebayoran%20Baru%2C%20Jakarta%20Selatan",
+  "memberUrl": "https://memcard.rdvgroup.my.id/larut",
+  "hours": {
+    "senin": null,
+    "selasa": { "open": "15:00", "close": "01:00" },
+    "rabu": { "open": "15:00", "close": "01:00" },
+    "kamis": { "open": "15:00", "close": "01:00" },
+    "jumat": { "open": "15:00", "close": "03:00" },
+    "sabtu": { "open": "15:00", "close": "03:00" },
+    "minggu": { "open": "15:00", "close": "24:00" }
+  },
+  "photos": {
+    "hero": "hero.webp",
+    "atmosphere": "suasana.webp",
+    "gallery": ["galeri-1.webp", "galeri-2.webp", "galeri-3.webp"],
+    "location": "lokasi.webp"
+  },
+  "atmosphere": {
+    "title": "Bar kopi, lampu redup",
+    "text": "Duduk di depan bar, lihat barista menimbang dan menyeduh. Piringan hitam diputar pelan sampai dini hari."
+  },
+  "facilities": [
+    { "icon": "music", "title": "Piringan hitam", "note": "diputar tiap malam" },
+    { "icon": "plug", "title": "Colokan", "note": "di bar dan meja panjang" },
+    { "icon": "parking", "title": "Parkir", "note": "motor dan mobil" }
+  ],
+  "bestSellers": [
+    { "name": "Es Kopi Larut", "price": 32000, "photo": "es-kopi.webp" },
+    { "name": "Double Espresso", "price": 25000, "photo": "espresso.webp" },
+    { "name": "Affogato", "price": 38000, "photo": "affogato.webp" },
+    { "name": "Butter Croissant", "price": 28000, "photo": "croissant.webp" }
+  ],
+  "menu": [
+    {
+      "category": "Espresso",
+      "photo": "kategori-espresso.webp",
+      "items": [
+        { "name": "Double Espresso", "price": 25000 },
+        { "name": "Long Black", "price": 28000, "note": "Panas atau dingin" },
+        { "name": "Piccolo", "price": 30000 },
+        { "name": "Flat White", "price": 34000 },
+        { "name": "Es Kopi Larut", "price": 32000, "note": "Espresso, susu segar, gula kelapa" }
+      ]
+    },
+    {
+      "category": "Seduh Manual",
+      "photo": "kategori-manual-brew.webp",
+      "items": [
+        { "name": "V60", "price": 38000, "note": "Tanya biji yang tersedia malam ini" },
+        { "name": "Japanese Iced", "price": 40000, "note": "V60 diseduh langsung di atas es" },
+        { "name": "Aeropress", "price": 38000 },
+        { "name": "Vietnam Drip", "price": 30000, "note": "Dengan susu kental manis" }
+      ]
+    },
+    {
+      "category": "Signature",
+      "photo": "kategori-signature.webp",
+      "items": [
+        { "name": "Cold Brew 12 Jam", "price": 34000 },
+        { "name": "Espresso Tonic", "price": 36000, "note": "Espresso, tonic, kulit jeruk" },
+        { "name": "Affogato", "price": 38000, "note": "Es krim vanila, espresso panas" },
+        { "name": "Cokelat Gelap", "price": 32000, "note": "Tanpa kopi" }
+      ]
+    },
+    {
+      "category": "Pastry",
+      "photo": "kategori-pastry.webp",
+      "items": [
+        { "name": "Butter Croissant", "price": 28000 },
+        { "name": "Pain au Chocolat", "price": 32000 },
+        { "name": "Banana Bread", "price": 26000 },
+        { "name": "Basque Cheesecake", "price": 38000 }
+      ]
+    }
+  ]
+}

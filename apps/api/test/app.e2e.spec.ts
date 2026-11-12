@@ -24,9 +24,12 @@ describe('app (e2e)', () => {
   beforeAll(async () => {
     tmp = mkdtempSync(join(tmpdir(), 'cafe-e2e-'));
     const content = join(tmp, 'content');
-    // A real cafe, one with hostile text, one with broken data.
+    // A real public cafe, a prospect demo, one with hostile text, one with broken data.
     cpSync(join(repo, 'content/cafes/kopi-senja'), join(content, 'cafes/kopi-senja'), { recursive: true });
     const sample = JSON.parse(readFileSync(join(repo, 'content/cafes/kopi-senja/cafe.json'), 'utf8'));
+    expect(sample.pitch).toBe(false);
+    mkdirSync(join(content, 'cafes/prospek'), { recursive: true });
+    writeFileSync(join(content, 'cafes/prospek/cafe.json'), JSON.stringify({ ...sample, name: 'Kopi Prospek', pitch: true }));
     mkdirSync(join(content, 'cafes/jahat'), { recursive: true });
     writeFileSync(join(content, 'cafes/jahat/cafe.json'), JSON.stringify({ ...sample, name: EVIL_NAME }));
     mkdirSync(join(content, 'cafes/rusak'), { recursive: true });
@@ -58,15 +61,22 @@ describe('app (e2e)', () => {
   });
 
   const http = () => request(app.getHttpServer());
+  const pageData = (html: string) =>
+    JSON.parse(html.match(/<script id="page-data" type="application\/json">(.*?)<\/script>/)![1]) as unknown;
 
   describe('cafe page', () => {
     it('renders the cafe with preview meta and page data', async () => {
       const res = await http().get('/kopi-senja').expect(200).expect('content-type', /html/);
       expect(res.text).toContain('<title>Kopi Senja · Coblong, Bandung</title>');
       expect(res.text).toContain('content="https://demo.example/media/kopi-senja/hero.webp"');
+      expect(res.text).not.toContain('noindex');
+      expect(pageData(res.text)).toMatchObject({ slug: 'kopi-senja', pitch: null });
+    });
+
+    it('hides prospect demos from search and shows the pitch strip data', async () => {
+      const res = await http().get('/prospek').expect(200);
       expect(res.text).toContain('content="noindex, nofollow"');
-      const json = res.text.match(/<script id="page-data" type="application\/json">(.*?)<\/script>/)![1];
-      expect(JSON.parse(json)).toMatchObject({ slug: 'kopi-senja', pitch: { name: 'Adrian' } });
+      expect(pageData(res.text)).toMatchObject({ slug: 'prospek', pitch: { name: 'Adrian' } });
     });
 
     it('sends security headers', async () => {
@@ -85,8 +95,33 @@ describe('app (e2e)', () => {
       expect(res.text.match(/<\/script>/g)).toHaveLength(2); // the data block and the app bundle only
     });
 
-    it.each(['/tidak-ada', '/rusak', '/admin-palsu/../etc', '/Kopi-Senja', '/media', '/'])('404s %s', async (path) => {
+    it.each(['/tidak-ada', '/rusak', '/admin-palsu/../etc', '/Kopi-Senja', '/media'])('404s %s', async (path) => {
       await http().get(path).expect(404);
+    });
+  });
+
+  describe('home page', () => {
+    it('lists only valid public cafes, with the pitch contact', async () => {
+      const res = await http().get('/').expect(200).expect('content-type', /html/);
+      expect(res.text).toContain('<title>Contoh website cafe</title>');
+      expect(res.text).not.toContain('noindex');
+      const data = pageData(res.text) as { cafes: { slug: string }[]; pitch: unknown };
+      expect(data.cafes.map((c) => c.slug)).toEqual(['jahat', 'kopi-senja']);
+      expect(data.cafes[1]).toEqual({
+        slug: 'kopi-senja',
+        name: 'Kopi Senja',
+        area: 'Coblong',
+        city: 'Bandung',
+        mode: 'light',
+        hero: 'hero.webp',
+      });
+      expect(data.pitch).toEqual({ name: 'Adrian', whatsapp: '6281111111111' });
+    });
+
+    it('cannot be broken out of by hostile cafe text', async () => {
+      const res = await http().get('/');
+      expect(res.text).not.toContain('<b>');
+      expect(res.text.match(/<\/script>/g)).toHaveLength(2);
     });
   });
 

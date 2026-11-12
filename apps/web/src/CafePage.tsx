@@ -20,7 +20,7 @@ import { formatPrice, textOn, waLink } from './format';
 import { DAY_KEYS, DAY_LABELS, WEEK_ORDER, formatTime, jakartaClock, openStatus, statusText } from './hours';
 
 type Facility = Cafe['facilities'][number]['icon'];
-const FACILITY_ICON: Record<Facility, Icon> = {
+export const FACILITY_ICON: Record<Facility, Icon> = {
   coffee: Coffee,
   wifi: WifiHigh,
   plug: Plug,
@@ -32,7 +32,7 @@ const FACILITY_ICON: Record<Facility, Icon> = {
 };
 
 /** Re-render every minute so "Buka sekarang" flips at closing time without a reload. */
-function useNow() {
+export function useNow() {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60_000);
@@ -42,7 +42,7 @@ function useNow() {
 }
 
 /** True while the element is on screen. Starts true so the order bar never flashes in on load. */
-function useInView<T extends Element>() {
+export function useInView<T extends Element>() {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(true);
   useEffect(() => {
@@ -85,13 +85,19 @@ export function CafePage({ data }: { data: PageData }) {
         <div className="topbar-actions">
           {cafe.contact.instagram && (
             <a
-              className="icon-link"
+              // On phones the Member button takes this slot; Instagram stays in the footer.
+              className={cafe.memberUrl ? 'icon-link desktop-only' : 'icon-link'}
               href={`https://instagram.com/${cafe.contact.instagram}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Instagram ${cafe.name}`}
             >
               <InstagramLogo size={22} weight="light" aria-hidden />
+            </a>
+          )}
+          {cafe.memberUrl && (
+            <a className="btn btn-outline btn-compact" href={cafe.memberUrl} target="_blank" rel="noopener noreferrer">
+              Member
             </a>
           )}
           <a className="btn btn-solid btn-compact desktop-only" href={orderLink} target="_blank" rel="noopener noreferrer">
@@ -327,7 +333,7 @@ export function CafePage({ data }: { data: PageData }) {
   );
 }
 
-function PitchBar({ cafeName, pitch }: { cafeName: string; pitch: NonNullable<PageData['pitch']> }) {
+export function PitchBar({ cafeName, pitch }: { cafeName: string; pitch: NonNullable<PageData['pitch']> }) {
   const [open, setOpen] = useState(true);
   if (!open) return null;
   return (
@@ -347,19 +353,22 @@ function PitchBar({ cafeName, pitch }: { cafeName: string; pitch: NonNullable<Pa
   );
 }
 
-function MenuSection({ cafe, active, onChange }: { cafe: Cafe; active: number; onChange: (i: number) => void }) {
+/** WAI-ARIA tabs for the menu categories: arrows move between them, Home/End jump to the ends. */
+export function useMenuTabs(count: number, active: number, onChange: (i: number) => void) {
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  // WAI-ARIA tabs: arrows move between categories, Home/End jump to the ends.
   const onKeyDown = (e: KeyboardEvent) => {
-    const last = cafe.menu.length - 1;
-    const next = { ArrowRight: active + 1, ArrowLeft: active - 1, Home: 0, End: last }[e.key];
+    const next = { ArrowRight: active + 1, ArrowLeft: active - 1, Home: 0, End: count - 1 }[e.key];
     if (next === undefined) return;
     e.preventDefault();
-    const i = (next + last + 1) % (last + 1);
+    const i = (next + count) % count;
     onChange(i);
     tabs.current[i]?.focus();
   };
+  return { tabs, onKeyDown };
+}
+
+function MenuSection({ cafe, active, onChange }: { cafe: Cafe; active: number; onChange: (i: number) => void }) {
+  const { tabs, onKeyDown } = useMenuTabs(cafe.menu.length, active, onChange);
 
   return (
     <section id="menu" className="menu wrap" aria-labelledby="menu-title">
